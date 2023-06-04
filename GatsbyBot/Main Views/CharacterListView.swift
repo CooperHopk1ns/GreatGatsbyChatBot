@@ -19,7 +19,6 @@ struct CharacterListView: View {
     func fetchCharacterTraits() {
         
         //Decode Character Traits/Personality
-        
     }
     
     var body: some View {

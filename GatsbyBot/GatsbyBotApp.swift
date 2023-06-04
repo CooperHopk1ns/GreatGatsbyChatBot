@@ -11,7 +11,6 @@ import SwiftUI
 //And whether your response agrees with their traits, do this through a like bar.
 //Possibly have characters interpret story through their own view on how things "occured".
 
-
 @main
 struct GatsbyBotApp: App {
     var body: some Scene {

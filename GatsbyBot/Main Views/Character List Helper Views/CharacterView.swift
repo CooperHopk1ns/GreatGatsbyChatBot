@@ -68,6 +68,7 @@ struct CharacterView: View {
         }
         return colorInt
     }
+    
     //Generate Description
     func generateDescription(selectedChar: String) -> String {
         var retCharDescription = ""

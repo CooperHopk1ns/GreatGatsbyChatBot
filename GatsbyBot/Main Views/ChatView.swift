@@ -123,7 +123,7 @@ struct ChatView: View {
                     )
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                //Options
+                //Response Options
                 VStack {
                     HStack {
                         ForEach(Array(uROptions), id: \.self) { option in

@@ -45,9 +45,7 @@ class Chatbot {
         
         
         return responseText
-    }
-    //Specific User Chat Generation
-    
+    }    
     //Variables
     let responsesPos : [String] = []
     let responsesNeut : [String] = []
