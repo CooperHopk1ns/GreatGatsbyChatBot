@@ -8,19 +8,31 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var welcomeCompleted = false
+    @State var appDescriptionCompleted = false
+    
     var body: some View {
-        TabView {
-            //Chat View
-            ChatView()
-                .tabItem {
-                    Label("Chat", systemImage: "ellipsis.message")
+        VStack {
+            if (welcomeCompleted == false && appDescriptionCompleted == false) {
+                WelcomeView(complete: $welcomeCompleted)
+            } else if (welcomeCompleted == true && appDescriptionCompleted == false) {
+                AppDescriptionView(complete: $appDescriptionCompleted)
+            } else if (welcomeCompleted == true && appDescriptionCompleted == true) {
+                TabView {
+                    //Chat View
+                    ChatView()
+                        .tabItem {
+                            Label("Chat", systemImage: "ellipsis.message")
+                        }
+                    //Character View
+                    CharacterListView()
+                        .tabItem {
+                            Label("Characters", systemImage: "person.text.rectangle")
+                            
+                        }
                 }
-            //Character View
-            CharacterListView()
-                .tabItem {
-                    Label("Characters", systemImage: "person.text.rectangle")
-                    
-                }
+            }
         }
         .task {
             //Character Order
@@ -32,6 +44,13 @@ struct ContentView: View {
             //Encode
             if let encoded = try? JSONEncoder().encode(characterTraits) {
                 UserDefaults.standard.set(encoded, forKey: "characterTraitsJSON")
+            }
+            //Encode all character like as array and start at 0.5 for all
+            //Decode Setup Completions
+            if let setupFinishedData = UserDefaults.standard.data(forKey: "setupFinishedJSON") {
+                let decodedSetupFinishedData = try? JSONDecoder().decode(Bool.self, from: setupFinishedData)
+                welcomeCompleted = decodedSetupFinishedData ?? false
+                appDescriptionCompleted = decodedSetupFinishedData ?? false
             }
         }
     }

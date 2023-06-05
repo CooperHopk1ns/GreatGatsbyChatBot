@@ -8,172 +8,80 @@
 import Foundation
 
 class Chatbot {
+    //Create all dialogue in contentview and then encode it, later decoding here based on what is needed
     //Variables
     let characters = ["Nick Carraway","James Gatz", "Jay Gatsby", "Daisy Buchanan", "Tom Buchanan", "Jordan Baker", "George Wilson", "Mr. Gatz", "Meyer Wolfsheim", "Myrtle Wilson", "Owl Eyes", "Klipspringer"]
-    //Have wolfsheim responses and then determine in the bot whether or not it agrees
+    
+    var progress = -1
     //Functions
+    func generateUserResponseOptions(selectedCharacter: String) -> [String] {
+        //Decode Progress
+        if let characterProgressData = UserDefaults.standard.data(forKey: "\(selectedCharacter)ProgressJSON") {
+            let decodedCharacterProgressData = try? JSONDecoder().decode(Int.self, from: characterProgressData)
+            progress = decodedCharacterProgressData ?? -1
+        }
+        progress += 1
+        //Encode Progress
+        if let encoded = try? JSONEncoder().encode(progress) {
+            UserDefaults.standard.set(encoded, forKey: "\(selectedCharacter)ProgressJSON")
+        }
+        var options = [""]
+        let userResponseOptions = [["positive:Hello?", "neutral:Who is this?", "negative:Hey there illegal bootlegger!"], ["Ye", "Yhu"]]
+        //let botResponseOptions = [["positive:Hello there old sport, I’m Jay Gatsby", "neutral:Hello, I’m Mr. Gatsby", "negative:How preposterous! Who are you and what do you want?!"]]
+        if (progress >= userResponseOptions.count) {
+            progress = userResponseOptions.count-1
+        }
+        options = userResponseOptions[progress]
+        return options
+    }
     func generateResponse(selectedCharacter: String, selectedResponse: String) -> String {
+        var like = 0.5
+        if let characterLikeData = UserDefaults.standard.data(forKey: "\(selectedCharacter)LikeJSON") {
+            let decodedCharacterLikeData = try? JSONDecoder().decode(Double.self, from: characterLikeData)
+            like = decodedCharacterLikeData ?? 0.5
+        }
+        //Delete When Done Testing //
+        let progress = 0
+        //let userResponseOptions = [["positive:Hello?", "neutral:Who is this?", "negative:Hey there illegal bootlegger!"]]
+        let botResponseOptions = [["positive:Hello there old sport, I’m Jay Gatsby", "neutral:Hello, I’m Mr. Gatsby", "negative:How preposterous! Who are you and what do you want?!"]]
+        //
         var responseText = ""
-        switch selectedCharacter {
-        case "Nick Carraway":
-            responseText = generateResponseCarraway(selectedResponse: selectedResponse)
-        case "James Gatz":
-            responseText = generateResponseJGatz(selectedResponse: selectedResponse)
-        case "Jay Gatsby":
-            responseText = generatResponseGatsby(selectedResponse: selectedResponse)
-        case "Daisy Buchanan":
-            responseText = generateResponseDaisy(selectedResponse: selectedResponse)
-        case "Tom Buchanan":
-            responseText = generateResponseTom(selectedResponse: selectedResponse)
-        case "Jordan Baker":
-            responseText = generateResponseJordan(selectedResponse: selectedResponse)
-        case "George Wilson":
-            responseText = generateResponseGeorge(selectedResponse: selectedResponse)
-        case "Mr. Gatz":
-            responseText = generateResponseMGatz(selectedResponse: selectedResponse)
-        case "Meyer Wolfsheim":
-            responseText = generateResponseWolfsheim(selectedResponse: selectedResponse)
-        case "Myrtle Wilson":
-            responseText = generateResponseMyrtle(selectedResponse: selectedResponse)
-        case "Owl Eyes":
-            responseText = generateResponseOwl(selectedResponse: selectedResponse)
-        case "Klipspringer":
-            responseText = generateResponseKlipspringer(selectedResponse: selectedResponse)
-        default:
-            responseText = "Error"
+        //Encode ResponseTotalJSON
+        if let encoded = try? JSONEncoder().encode(botResponseOptions.count) {
+            UserDefaults.standard.set(encoded, forKey: "\(selectedCharacter)ResponseTotalJSON")
         }
+        //Decode options based on selected character
+            
+        //Determine how bot will respond & whether increases or decreases like
+        if (selectedResponse.contains("positive:")) {
+            for i in 0..<botResponseOptions[progress].count {
+                if (botResponseOptions[progress][i].contains("positive:")) {
+                    responseText = botResponseOptions[progress][i]
+                    like += 0.1
+                }
+            }
+        } else if (selectedResponse.contains("negative:")) {
+            for i in 0..<botResponseOptions[progress].count {
+                if (botResponseOptions[progress][i].contains("negative:")) {
+                    responseText = botResponseOptions[progress][i]
+                }
+            }
+        } else if (selectedResponse.contains("neutral:")) {
+            for i in 0..<botResponseOptions[progress].count {
+                if (botResponseOptions[progress][i].contains("neutral:")) {
+                    responseText = botResponseOptions[progress][i]
+                    like -= 0.1
+                }
+            }
+        }
+        //Update
+        //Update character like
+        if let encoded = try? JSONEncoder().encode(like) {
+            UserDefaults.standard.set(encoded, forKey: "\(selectedCharacter)LikeJSON")
+        }
+        //Update chat progress
         
-        
+        //Return Bot Response
         return responseText
-    }    
-    //Variables
-    let responsesPos : [String] = []
-    let responsesNeut : [String] = []
-    let responsesNeg : [String] = []
-    var progression = 0
-    //Update progression based on interactions to use for index of responses.
-    //Function
-    //Nick Carraway
-    func generateResponseCarraway(selectedResponse: String) -> String {
-        //if selected response = correct position then pos, like++, etc.
-        //Possibly have response be universal i.e. good response is always 1, then hardcode?
-        var charResponseText = ""
-        if (selectedResponse == "Good Response") {
-            charResponseText = "Good Choice"
-        } else {
-            charResponseText = "Bad Choice"
-        }
-        return charResponseText
-    }
-    //James Gatz
-    func generateResponseJGatz(selectedResponse: String) -> String {
-        var charResponseText = ""
-        if (selectedResponse == "Good Response") {
-            charResponseText = "Good Choice"
-        } else {
-            charResponseText = "Bad Choice"
-        }
-        return charResponseText
-    }
-    //Jay Gatsby
-    func generatResponseGatsby(selectedResponse: String) -> String {
-        var charResponseText = ""
-        //Iterate through response options array and choose if good or bad based on that, possibly just store in JSON arrays so only one array and not a bunch to call
-        if (selectedResponse == "Good Response") {
-            charResponseText = "Good Choice"
-        } else {
-            charResponseText = "Bad Choice"
-        }
-        return charResponseText
-    }
-    //Daisy Buchanan
-    func generateResponseDaisy(selectedResponse: String) -> String {
-        var charResponseText = ""
-        if (selectedResponse == "Good Response") {
-            charResponseText = "Good Choice"
-        } else {
-            charResponseText = "Bad Choice"
-        }
-        return charResponseText
-    }
-    //Tom Buchanan
-    func generateResponseTom(selectedResponse: String) -> String {
-        var charResponseText = ""
-        if (selectedResponse == "Good Response") {
-            charResponseText = "Good Choice"
-        } else {
-            charResponseText = "Bad Choice"
-        }
-        return charResponseText
-    }
-    //Jordan Baker
-    func generateResponseJordan(selectedResponse: String) -> String {
-        var charResponseText = ""
-        if (selectedResponse == "Good Response") {
-            charResponseText = "Good Choice"
-        } else {
-            charResponseText = "Bad Choice"
-        }
-        return charResponseText
-    }
-    //George Wilson
-    func generateResponseGeorge(selectedResponse: String) -> String {
-        var charResponseText = ""
-        if (selectedResponse == "Good Response") {
-            charResponseText = "Good Choice"
-        } else {
-            charResponseText = "Bad Choice"
-        }
-        return charResponseText
-    }
-    //Mr. Gatz
-    func generateResponseMGatz(selectedResponse: String) -> String {
-        var charResponseText = ""
-        if (selectedResponse == "Good Response") {
-            charResponseText = "Good Choice"
-        } else {
-            charResponseText = "Bad Choice"
-        }
-        return charResponseText
-    }
-    //Meyer Wolfsheim
-    func generateResponseWolfsheim(selectedResponse: String) -> String {
-        var charResponseText = ""
-        if (selectedResponse == "Good Response") {
-            charResponseText = "Good Choice"
-        } else {
-            charResponseText = "Bad Choice"
-        }
-        return charResponseText
-    }
-    //Myrtle Wilson
-    func generateResponseMyrtle(selectedResponse: String) -> String {
-        var charResponseText = ""
-        if (selectedResponse == "Good Response") {
-            charResponseText = "Good Choice"
-        } else {
-            charResponseText = "Bad Choice"
-        }
-        return charResponseText
-    }
-    //Owl Eyes
-    func generateResponseOwl(selectedResponse: String) -> String {
-        var charResponseText = ""
-        if (selectedResponse == "Good Response") {
-            charResponseText = "Good Choice"
-        } else {
-            charResponseText = "Bad Choice"
-        }
-        return charResponseText
-    }
-    //Klipspringer
-    func generateResponseKlipspringer(selectedResponse: String) -> String {
-        var charResponseText = ""
-        if (selectedResponse == "Good Response") {
-            charResponseText = "Good Choice"
-        } else {
-            charResponseText = "Bad Choice"
-        }
-        return charResponseText
     }
 }

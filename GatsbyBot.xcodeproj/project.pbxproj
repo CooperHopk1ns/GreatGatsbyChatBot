@@ -15,6 +15,8 @@
 		6651AA4A2A277415004195AE /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6651AA492A277415004195AE /* ChatView.swift */; };
 		6652B3A12A27743000A01668 /* CharacterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6652B3A02A27743000A01668 /* CharacterListView.swift */; };
 		6652B3A42A27744600A01668 /* CharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6652B3A32A27744600A01668 /* CharacterView.swift */; };
+		66BD3BB22A2D48580008B8C4 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BD3BB12A2D48580008B8C4 /* WelcomeView.swift */; };
+		66BD3BB42A2D486D0008B8C4 /* AppDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BD3BB32A2D486D0008B8C4 /* AppDescriptionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,8 @@
 		6651AA492A277415004195AE /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		6652B3A02A27743000A01668 /* CharacterListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterListView.swift; sourceTree = "<group>"; };
 		6652B3A32A27744600A01668 /* CharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterView.swift; sourceTree = "<group>"; };
+		66BD3BB12A2D48580008B8C4 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		66BD3BB32A2D486D0008B8C4 /* AppDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDescriptionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,8 +91,8 @@
 		6651AA482A277406004195AE /* Main Views */ = {
 			isa = PBXGroup;
 			children = (
-				660245852A28C9A9004505D7 /* Helpers */,
 				6652B3A52A278B3C00A01668 /* Setup Views */,
+				660245852A28C9A9004505D7 /* Helpers */,
 				6651AA492A277415004195AE /* ChatView.swift */,
 				6652B3A02A27743000A01668 /* CharacterListView.swift */,
 				6652B3A22A27743700A01668 /* Character List Helper Views */,
@@ -107,6 +111,8 @@
 		6652B3A52A278B3C00A01668 /* Setup Views */ = {
 			isa = PBXGroup;
 			children = (
+				66BD3BB12A2D48580008B8C4 /* WelcomeView.swift */,
+				66BD3BB32A2D486D0008B8C4 /* AppDescriptionView.swift */,
 			);
 			path = "Setup Views";
 			sourceTree = "<group>";
@@ -184,9 +190,11 @@
 				6651AA3D2A2773FF004195AE /* ContentView.swift in Sources */,
 				6651AA4A2A277415004195AE /* ChatView.swift in Sources */,
 				6652B3A42A27744600A01668 /* CharacterView.swift in Sources */,
+				66BD3BB42A2D486D0008B8C4 /* AppDescriptionView.swift in Sources */,
 				6652B3A12A27743000A01668 /* CharacterListView.swift in Sources */,
 				6651AA3B2A2773FF004195AE /* GatsbyBotApp.swift in Sources */,
 				660245872A28C9B5004505D7 /* Chatbot.swift in Sources */,
+				66BD3BB22A2D48580008B8C4 /* WelcomeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,6 +326,7 @@
 				DEVELOPMENT_TEAM = 4FA46Q6PPA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Gatsby Bot";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -347,6 +356,7 @@
 				DEVELOPMENT_TEAM = 4FA46Q6PPA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Gatsby Bot";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
