@@ -13,6 +13,7 @@ struct CharacterView: View {
     //View Specific Variables
     @State var character : String
     @State var charDescription = ""
+    @State var charPurpose = ""
     let characters = ["Nick Carraway","James Gatz", "Jay Gatsby", "Daisy Buchanan", "Tom Buchanan", "Jordan Baker", "George Wilson", "Mr. Gatz", "Meyer Wolfsheim", "Myrtle Wilson", "Owl Eyes", "Klipspringer"]
     @State var characterTraits : [[String]] = []
     @State var selectedCharacterTraits : [String] = []
@@ -103,6 +104,39 @@ struct CharacterView: View {
         
         return retCharDescription
     }
+    //Generate purpose
+    func generatePurpose(selectedChar: String) -> String {
+        var retPurposeText = ""
+        switch selectedChar {
+        case "Nick Carraway":
+            retPurposeText = "Nick Carraway gives the reader insight into the story. He represents an outsider in the story and someone who is chasing the American Dream at the time, as he is constantly influenced by those who have 'acheived' the American Dream, though the book ultimately portrays the idea that the American Dream is unattainable."
+        case "James Gatz":
+            retPurposeText = "James Gatz represents the growing idea at the time of this writing's novel that money was a large factor in a happy life, seen as James Gatz transforms into Jay Gatsby while working for the desire of wealth."
+        case "Jay Gatsby":
+            retPurposeText = "Jay Gatsby perfectly represents the American Dream, seen as he gives up nearly everything in hopes of attaining said dream, ultimately allowing money to dictate his life and his relationships, though in the end it made him an unhappy person as his work in becoming wealthy, primarily to be good enough for Daisy, had little effect."
+        case "Daisy Buchanan":
+            retPurposeText = "Daisy Buchanan tends to represent the somewhat hollowness of people in the 1920s, seen as she leaves the person she loves for someone who she still has affection for, though not as much, primarily due to his financial success."
+        case "Tom Buchanan":
+            retPurposeText = "Tom Buchanan represents the underbelly of the American Dream, seen as he acts better than everyone else due to his wealth, and exercises excessive power because of it."
+        case "Jordan Baker":
+            retPurposeText = "Jordan Baker represents the growing individualistic woman of the 1920s, though in the end she ends up retreating to traditional views as she marries a man she does not love."
+        case "George Wilson":
+            retPurposeText = "George Wilson symbolizes the working class of the 1920s, always chasing the American Dream, however never truly obtaining it. He also represents the obsession of women throughout the piece, as he, akin to Gatsby, goes into a depressive and irrational state when he is without the one he loves."
+        case "Mr. Gatz":
+            retPurposeText = "Mr. Gatz represents a proud father but also the preceding generation, as he is very humble and does not seem to be chasing the American Dream. Mr. Gatz is however supportive of his son and proud of how far he made it in life, and he shows that Gatsby lied a lot about his past, seen with his untrue claim that his family left him money."
+        case "Meyer Wolfsheim":
+            retPurposeText = "Meyer Wolfsheim represents the underbelly of the American Dream, as he acheives it through ethically questionable means. He also gives us large insight into where Gatsby attained the majority of his wealth."
+        case "Myrtle Wilson":
+            retPurposeText = "Myrtle Wilson represents the working class's desire to become wealthy. Overall showing her jealousy of those who have wealth in her deep desire for it, and the high level of materialism during this time period due to America's economic prosperity and the rise of mass consumption."
+        case "Owl Eyes":
+            retPurposeText = "Owl Eyes represents the distrust that many felt in those who were wealthy, especially the recently wealthy, as he is profoundly surprised when the books in Gatsby's house are real, rather than a fake representation of the book."
+        case "Klipspringer":
+            retPurposeText = "Klipspringer represents the general free loaders that attend Gatsby's parties, though he takes it to the extreme, showing how the deep desire to have some form of wealth in this time caused crazed circumstances."
+        default:
+            retPurposeText = "This Character Has No Definitive Purpose"
+        }
+        return retPurposeText
+    }
     
     var body: some View {
         VStack {
@@ -112,7 +146,7 @@ struct CharacterView: View {
                 Text(character)
                     .font(.system(size: 30))
                     .fontWeight(.bold)
-                VStack {
+                ScrollView {
                     //Description
                     Text(charDescription)
                         .padding()
@@ -126,6 +160,15 @@ struct CharacterView: View {
                     ForEach(selectedCharacterTraits, id: \.self) { trait in
                         Text(trait)
                     }
+                    Divider()
+                    //Purpose
+                    Text("Purpose")
+                        .font(.system(size: 25))
+                        .fontWeight(.medium)
+                        .padding([.bottom])
+                    Text(charPurpose)
+                        .padding()
+                        .multilineTextAlignment(.center)
                 }
             }
         }
@@ -138,11 +181,13 @@ struct CharacterView: View {
             charDescription = generateDescription(selectedChar: character)
             selectedCharBGC = generateBGC(selectedChar: character)
             fetchCharacterTraits()
+            charPurpose = generatePurpose(selectedChar: character)
         }
         .task {
             charDescription = generateDescription(selectedChar: character)
             selectedCharBGC = generateBGC(selectedChar: character)
             fetchCharacterTraits()
+            charPurpose = generatePurpose(selectedChar: character)
         }
     }
 }

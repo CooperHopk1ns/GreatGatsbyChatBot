@@ -9,13 +9,13 @@ import SwiftUI
 
 struct WelcomeView: View {
     
-    @State var username = ""
+    @State var newUsername = ""
     @Binding var complete : Bool
     
     //Functions
-    func encodeUsername() {
-        if let encoded = try? JSONEncoder().encode(username) {
-            UserDefaults.standard.set(username, forKey: "usernameJSON")
+    func encodeUsername(user: String) {
+        if let encoded = try? JSONEncoder().encode(user) {
+            UserDefaults.standard.set(encoded, forKey: "usernameJSON")
         }
     }
     
@@ -26,13 +26,13 @@ struct WelcomeView: View {
                 .fontWeight(.bold)
                 .padding()
             Text("What should each bot call you?")
-            TextField("Enter Your First Name", text: $username)
+            TextField("Enter Your First Name", text: $newUsername)
                 .textFieldStyle(.roundedBorder)
                 .padding(.horizontal)
                 .padding(.bottom, 40)
                 .multilineTextAlignment(.center)
             Button("Enter") {
-                encodeUsername()
+                encodeUsername(user: newUsername)
                 complete = true
             }
             .padding(.vertical, 6)
